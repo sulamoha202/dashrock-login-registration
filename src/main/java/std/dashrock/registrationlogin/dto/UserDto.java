@@ -4,8 +4,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 
-
-
 public class UserDto {
 	
 	private Long id;
@@ -18,19 +16,20 @@ public class UserDto {
 	private String email;
 	@NotEmpty(message = "Password should not be empty")
 	private String password;
-	
+	private String country;
 	public UserDto() {
 		
 	}
 
 	public UserDto(Long id, @NotEmpty String firstName, @NotEmpty String lastName,
 			@NotEmpty(message = "Email should not be empty") @Email String email,
-			@NotEmpty(message = "Password should not be empty") String password) {
+			@NotEmpty(message = "Password should not be empty") String password,String country) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
+		this.country = country;
 	}
 
 	public Long getId() {
@@ -72,8 +71,12 @@ public class UserDto {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	
-	
-	
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 }

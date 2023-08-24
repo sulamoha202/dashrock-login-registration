@@ -1,31 +1,31 @@
 <!doctype html>
-<html lang="en" class="semi-dark">
+<html lang="en" class="semi-dark" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!--favicon-->
-	<link rel="icon" href="assets/images/favicon-32x32.png" type="image/png" />
+	<link rel="icon" th:href="@{/images/favicon-32x32.png}" type="image/png" />
 	<!--plugins-->
-	<link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-	<link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-	<link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+	<link th:href="@{/plugins/simplebar/css/simplebar.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/perfect-scrollbar/css/perfect-scrollbar.css}" rel="stylesheet" />
+	<link th:href="@{/plugins/metismenu/css/metisMenu.min.css}" rel="stylesheet" />
 	<!-- loader-->
-	<link href="assets/css/pace.min.css" rel="stylesheet" />
-	<script src="assets/js/pace.min.js"></script>
+	<link th:href="@{/css/pace.min.css}" rel="stylesheet" />
+	<script src="assets/js/pace.min.js}"></script>
 	<!-- Bootstrap CSS -->
-	<link href="assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="assets/css/bootstrap-extended.css" rel="stylesheet">
+	<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/bootstrap-extended.css}" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
-	<link href="assets/css/app.css" rel="stylesheet">
-	<link href="assets/css/icons.css" rel="stylesheet">
+	<link th:href="@{/css/app.css}" rel="stylesheet">
+	<link th:href="@{/css/icons.css}" rel="stylesheet">
 	<title>Dashrock - Bootstrap 5 Admin Dashboard Template</title>
 </head>
 
 <body class="">
 	<!--wrapper-->
-	<div class="wrapper">
+	!<div class="wrapper">
 		<div class="d-flex align-items-center justify-content-center my-5">
 			<div class="container-fluid">
 				<div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
@@ -34,36 +34,93 @@
 							<div class="card-body">
 								<div class="p-4">
 									<div class="mb-3 text-center">
-										<img src="assets/images/logo-icon.png" width="60" alt="" />
+										<img th:src="@{/images/logo-icon.png}" width="60" alt="" />
 									</div>
 									<div class="text-center mb-4">
 										<h5 class="">Dashrock Admin</h5>
 										<p class="mb-0">Please fill the below details to create your account</p>
 									</div>
+									<div th:if="${param.success}">
+										<div class="alert alert-info">
+											You have successfully registered our app!
+										</div>
+									</div>
 									<div class="form-body">
-										<form class="row g-3">
+										<form class="row g-3"
+											  method="post"
+											  role="form"
+											  th:action="@{/auth-basic-signup/save}"
+											  th:object="${user}"
+										>
 											<div class="col-12">
-												<label for="inputUsername" class="form-label">Username</label>
-												<input type="email" class="form-control" id="inputUsername" placeholder="Jhon">
+												<label class="form-label">First Name</label>
+												<input
+														class="form-control"
+														id="firstName"
+														name="firstName"
+														placeholder="Enter first name"
+														th:field="*{firstName}"
+														type="text"
+												/>
+												<p th:errors = "*{firstName}" class="text-danger"
+												   th:if="${#fields.hasErrors('firstName')}"></p>
 											</div>
 											<div class="col-12">
-												<label for="inputEmailAddress" class="form-label">Email Address</label>
-												<input type="email" class="form-control" id="inputEmailAddress" placeholder="example@user.com">
+												<label class="form-label">Last Name</label>
+												<input
+														class="form-control"
+														id="lastName"
+														name="lastName"
+														placeholder="Enter last name"
+														th:field="*{lastName}"
+														type="text"
+												/>
+												<p th:errors = "*{lastName}" class="text-danger"
+												   th:if="${#fields.hasErrors('lastName')}"></p>
 											</div>
 											<div class="col-12">
-												<label for="inputChoosePassword" class="form-label">Password</label>
+												<label for="email" class="form-label">Email</label>
+												<input
+														type="email"
+														class="form-control"
+														id="email"
+														placeholder="Enter email address"
+														th:field="*{email}"
+														name="email"
+												>
+												<p th:errors = "*{email}" class="text-danger"
+												   th:if="${#fields.hasErrors('email')}"></p>
+											</div>
+											<div class="col-12">
+												<label for="password" class="form-label">Password</label>
 												<div class="input-group" id="show_hide_password">
-													<input type="password" class="form-control border-end-0" id="inputChoosePassword" value="12345678" placeholder="Enter Password"> <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+													<input
+															type="password"
+															class="form-control border-end-0"
+															id="password"
+															name="password"
+															placeholder="Enter Password"
+															th:field="*{password}"
+													>
+													<a href="javascript:;" class="input-group-text bg-transparent">
+														<i class='bx bx-hide'></i>
+													</a>
 												</div>
+												<p th:errors = "*{password}" class="text-danger"
+												   th:if="${#fields.hasErrors('password')}"></p>
 											</div>
-											<div class="col-12">
-												<label for="inputSelectCountry" class="form-label">Country</label>
-												<select class="form-select" id="inputSelectCountry" aria-label="Default select example">
-													<option selected>India</option>
-													<option value="1">United Kingdom</option>
-													<option value="2">America</option>
-													<option value="3">Dubai</option>
-												</select>
+											 <div class="col-12">
+												<label for="country" class="form-label">Country</label>
+                                                <input
+                                                        type="text"
+                                                        class="form-control border-end-0"
+                                                        id="country"
+                                                        name="country"
+                                                        placeholder="Enter Country"
+                                                        th:field="*{country}"
+                                                >
+												<p th:errors = "*{country}" class="text-danger"
+												   th:if="${#fields.hasErrors('country')}"></p>
 											</div>
 											<div class="col-12">
 												<div class="form-check form-switch">
@@ -78,7 +135,7 @@
 											</div>
 											<div class="col-12">
 												<div class="text-center ">
-													<p class="mb-0">Already have an account? <a href="authentication-signin.html">Sign in here</a></p>
+													<p class="mb-0">Already have an account? <a th:href="@{/auth-basic-signin}">Sign in here</a></p>
 												</div>
 											</div>
 										</form>
@@ -104,12 +161,12 @@
 	</div>
 	<!--end wrapper-->
 	<!-- Bootstrap JS -->
-	<script src="assets/js/bootstrap.bundle.min.js"></script>
+	<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
 	<!--plugins-->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-	<script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-	<script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/plugins/simplebar/js/simplebar.min.js}"></script>
+	<script th:src="@{/plugins/metismenu/js/metisMenu.min.js}"></script>
+	<script th:src="@{/plugins/perfect-scrollbar/js/perfect-scrollbar.js}"></script>
 	<!--Password show & hide js -->
 	<script>
 		$(document).ready(function () {
@@ -128,7 +185,7 @@
 		});
 	</script>
 	<!--app JS-->
-	<script src="assets/js/app.js"></script>
+	<script th:src="@{/js/app.js}"></script>
 </body>
 
 </html>

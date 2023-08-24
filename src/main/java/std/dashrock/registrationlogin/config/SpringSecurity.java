@@ -21,15 +21,23 @@ public class SpringSecurity {
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 		http.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests((authorize) ->
-					authorize.requestMatchers("/register/**").permitAll()
-						.requestMatchers("/index").permitAll()
+					authorize
+							.requestMatchers("/static/**", "/css/**", "/flags/**", "/fonts/**", "/images/**", "/js/**", "/plugins/**").permitAll()
+						.requestMatchers("/register/**","/").permitAll()
+						.requestMatchers("/auth-basic-signup").permitAll()
+						.requestMatchers("/auth-basic-signin").permitAll()
 						.requestMatchers("/users").hasRole("ADMIN")
+						.requestMatchers("/dashboard").hasRole("ADMIN")
 				).formLogin(
 						form -> form
-								.loginPage("/api/custom_login")
-								.loginProcessingUrl("/api/custom_login")
-								.successForwardUrl("/api/users")
-								
+<<<<<<< HEAD
+								.loginPage("/login")
+								.loginProcessingUrl("/login")
+=======
+								.loginPage("/auth-basic-signin")
+								.loginProcessingUrl("/auth-basic-signin")
+>>>>>>> 53da75561645ca4cf5d1f57061b5ea15f13bacf9
+								.defaultSuccessUrl("/dashboard",true)
 							 	.permitAll()
 						).logout(
 								logout -> logout
