@@ -34,6 +34,8 @@ public class User {
 	
 	@Column(nullable = false)
 	private String password;
+
+	private String country;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinTable(
@@ -47,12 +49,13 @@ public class User {
 		
 	}
 
-	public User(Long id, String name, String email, String password, List<Role> roles) {
+	public User(Long id, String name, String email, String password, String country, List<Role> roles) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.country = country;
 	}
 
 	public Long getId() {
@@ -94,6 +97,12 @@ public class User {
 	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
-	
-	
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
 }

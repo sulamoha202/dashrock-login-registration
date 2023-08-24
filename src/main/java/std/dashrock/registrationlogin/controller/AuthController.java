@@ -2,14 +2,12 @@ package std.dashrock.registrationlogin.controller;
 
 import java.util.List;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
 import std.dashrock.registrationlogin.dto.UserDto;
@@ -17,7 +15,6 @@ import std.dashrock.registrationlogin.entity.User;
 import std.dashrock.registrationlogin.service.UserService;
 
 @Controller
-@RequestMapping("/api")
 public class AuthController {
 	
 	private UserService userService;
@@ -27,16 +24,11 @@ public class AuthController {
 		this.userService = userService;
 	}
 
-	@GetMapping("/index")
+	@GetMapping("/")
 	public String home() {
 		return "index";
 	}
-	
-	@GetMapping("/custom_login")
-	public String login( ) {
-		return "custom_login";
-	}
-	
+
 	@GetMapping("/register")
 	public String showRegisterationForm(Model model) {
 		
@@ -65,26 +57,22 @@ public class AuthController {
 		userService.saveUser(userDto);
 		return "redirect:/register?success";
 	}
-	
+
 	@GetMapping("/users")
 	public String users(Model model) {
 		List<UserDto> users = userService.findAllUsers();
 		model.addAttribute("users", users);
 		return "users";
 	}
-	
-	@GetMapping("/auth-basic-signup")
-	public String basicSignup() {
-		return "auth-basic-signup";
-	}
-	@GetMapping("/auth-basic-signin")
+
+	@GetMapping("/login")
 	public String basicSignin() {
-		return "auth-basic-signin";
+		return "login";
 	}
 	
 	@GetMapping("/dashboard")
 	public String dashboard() {
-		return "index2";
+		return "dashboard";
 	}
 	
 	

@@ -42,9 +42,9 @@ public class UserServiceImpl implements UserService {
 		User user = new User();
 		user.setName(userDto.getFirstName()+" "+userDto.getLastName());
 		user.setEmail(userDto.getEmail());
-		
+		user.setCountry(userDto.getCountry());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-		//user.setPassword(userDto.getPassword());
+
 		
 		Role role = roleRepository.findByName("ROLE_ADMIN");
 		if(role == null) {
