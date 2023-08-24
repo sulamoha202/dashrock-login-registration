@@ -100,6 +100,19 @@
               <p th:errors = "*{password}" class="text-danger"
                  th:if="${#fields.hasErrors('password')}"></p>
             </div>
+            <div class="col-12">
+              <label for="country" class="form-label">Country</label>
+              <input
+                      type="text"
+                      class="form-control border-end-0"
+                      id="country"
+                      name="country"
+                      placeholder="Enter Country"
+                      th:field="*{country}"
+              >
+              <p th:errors = "*{country}" class="text-danger"
+                 th:if="${#fields.hasErrors('country')}"></p>
+            </div>
             <div class="form-group">
               <button class="btn btn-primary" type="submit">Register</button>
               <span>Already registered? <a th:href="@{/login}">Login here</a></span>
