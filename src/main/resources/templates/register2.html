@@ -42,23 +42,23 @@
           <form
             method="post"
             role="form"
-            th:action="@{/register/save}"
+            th:action="@{/api/register/save}"
             th:object="${user}"
           >
             <div class="form-group mb-3">
               <label class="form-label">First Name</label>
               <input
                       class="form-control"
-                      id="firstName"
-                      name="firstName"
+                      id="fullName"
+                      name="fullName"
                       placeholder="Enter first name"
-                      th:field="*{firstName}"
+                      th:field="*{fullName}"
                       type="text"
               />
-              <p th:errors = "*{firstName}" class="text-danger"
-              th:if="${#fields.hasErrors('firstName')}"></p>
+              <p th:errors = "*{fullName}" class="text-danger"
+              th:if="${#fields.hasErrors('fullName')}"></p>
             </div>
-
+            <!--
             <div class="form-group mb-3">
               <label class="form-label">Last Name</label>
               <input
@@ -72,7 +72,7 @@
               <p th:errors = "*{lastName}" class="text-danger"
                  th:if="${#fields.hasErrors('lastName')}"></p>
             </div>
-
+          -->
             <div class="form-group mb-3">
               <label class="form-label">Email</label>
               <input
@@ -99,19 +99,6 @@
               />
               <p th:errors = "*{password}" class="text-danger"
                  th:if="${#fields.hasErrors('password')}"></p>
-            </div>
-            <div class="col-12">
-              <label for="country" class="form-label">Country</label>
-              <input
-                      type="text"
-                      class="form-control border-end-0"
-                      id="country"
-                      name="country"
-                      placeholder="Enter Country"
-                      th:field="*{country}"
-              >
-              <p th:errors = "*{country}" class="text-danger"
-                 th:if="${#fields.hasErrors('country')}"></p>
             </div>
             <div class="form-group">
               <button class="btn btn-primary" type="submit">Register</button>

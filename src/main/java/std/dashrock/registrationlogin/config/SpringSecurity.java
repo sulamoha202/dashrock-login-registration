@@ -24,16 +24,16 @@ public class SpringSecurity {
 					authorize
 							.requestMatchers("/static/**", "/css/**", "/flags/**", "/fonts/**", "/images/**", "/js/**", "/plugins/**").permitAll()
 						.requestMatchers("/register/**","/").permitAll()
+						.requestMatchers("/api/register/**", "/").permitAll()
+						.requestMatchers("/api/confirm-account/**", "/").permitAll()
 						.requestMatchers("/auth-basic-signup").permitAll()
 						.requestMatchers("/auth-basic-signin").permitAll()
 						.requestMatchers("/users").hasRole("ADMIN")
-						.requestMatchers("/dashboard").hasRole("ADMIN")
+						.requestMatchers("/dashboard").authenticated()
 				).formLogin(
 						form -> form
 								.loginPage("/login")
 								.loginProcessingUrl("/login")
-								.loginPage("/auth-basic-signin")
-								.loginProcessingUrl("/auth-basic-signin")
 								.defaultSuccessUrl("/dashboard",true)
 							 	.permitAll()
 						).logout(
