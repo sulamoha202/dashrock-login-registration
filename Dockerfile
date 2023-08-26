@@ -1,6 +1,7 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /opt
 COPY . .
+RUN ls -la .
 RUN chmod +x mvnw
 RUN mvnw clean package -DskipTests
 
