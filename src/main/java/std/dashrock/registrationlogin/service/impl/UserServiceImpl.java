@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void saveUser(UserDto userDto) {
 		User user = new User();
-		user.setName(userDto.getFirstName()+" "+userDto.getLastName());
+		user.setFullName(userDto.getFullName());
 		user.setEmail(userDto.getEmail());
 		user.setCountry(userDto.getCountry());
 		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
@@ -54,13 +54,37 @@ public class UserServiceImpl implements UserService {
 		user.setRoles(Arrays.asList(role));
 		userRepository.save(user);
 		
-		
+	}
+	@Override
+	public void saveUser(User user) {
+		userRepository.save(user);
+	}
+	@Override
+	public User setUser(UserDto userDto) {
+		User user = new User();
+		user.setFullName(userDto.getFullName());
+		user.setEmail(userDto.getEmail());
+		user.setCountry(userDto.getCountry());
+		user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+		Role role = roleRepository.findByName("ROLE_ADMIN");
+		if(role == null) {
+			role = checkRoleExist();
+		}
+		user.setRoles(Arrays.asList(role));
+		return user;
 	}
 
 	@Override
 	public User findUserByEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+
+	@Override
+	public User findByEmailIgnoreCase(String email) {
+		return userRepository.findByEmailIgnoreCase(email);
+	}
+	
+	
 
 	@Override
 	public List<UserDto> findAllUsers() {
@@ -73,9 +97,7 @@ public class UserServiceImpl implements UserService {
 	
 	private UserDto mapToUserDto(User user) {
 		UserDto userDto = new UserDto();
-		String[] str = user.getName().split(" ");
-		userDto.setFirstName(str[0]);
-		userDto.setLastName(str[1]);
+		userDto.setFullName(userDto.getFullName());
 		userDto.setEmail(user.getEmail());
 		return userDto;
 	}

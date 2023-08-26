@@ -21,13 +21,11 @@ import jakarta.persistence.Table;
 @Table(name="users")
 public class User {
 	
-	private static final long serialVersionUID = 1L;
-	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false)
-	private String name;
+	private String fullName;
 	
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -44,14 +42,24 @@ public class User {
 			inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
 			)
 	private List<Role> roles = new ArrayList<>();
+	
+	@Column(name ="verficationCode")
+	private String verficationCode;
+	
+	private boolean enabled;
+
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 	public User() {
 		
 	}
 
-	public User(Long id, String name, String email, String password, String country, List<Role> roles) {
+	public User(Long id, String fullName, String email, String password, String country, List<Role> roles) {
 		this.id = id;
-		this.name = name;
+		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
@@ -66,12 +74,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getEmail() {
@@ -105,4 +113,23 @@ public class User {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + fullName + ", email=" + email + ", password=" + password + ", country="
+				+ country + ", roles=" + roles + "]";
+	}
+	
+	public String getVerficationCode() {
+		return verficationCode;
+	}
+	
+	public void setVerficationCode(String verficationCode) {
+		this.verficationCode = verficationCode;
+	}
+	
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
 }
