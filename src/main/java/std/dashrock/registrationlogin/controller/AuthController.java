@@ -28,15 +28,10 @@ public class AuthController {
 	public String home() {
 		return "index";
 	}
-<<<<<<< HEAD
-=======
-	
 	@GetMapping("/custom_login")
 	public String login( ) {
 		return "custom_login";
 	}
->>>>>>> 53da75561645ca4cf5d1f57061b5ea15f13bacf9
-
 	@GetMapping("/register")
 	public String showRegisterationForm(Model model) {
 		
@@ -73,9 +68,7 @@ public class AuthController {
 		return "users";
 	}
 
-<<<<<<< HEAD
-	@GetMapping("/login")
-=======
+/*
 	@GetMapping("/auth-basic-signup")
 	public String showBasicSignup(Model model) {
 		UserDto user = new UserDto();
@@ -104,11 +97,10 @@ public class AuthController {
 		return "redirect:/auth-basic-signup?success";
 	}
 	@GetMapping("/auth-basic-signin")
->>>>>>> 53da75561645ca4cf5d1f57061b5ea15f13bacf9
 	public String basicSignin() {
 		return "login";
 	}
-	
+	*/
 	@GetMapping("/dashboard")
 	public String dashboard() {
 		return "dashboard";
