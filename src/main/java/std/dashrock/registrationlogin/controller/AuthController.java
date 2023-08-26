@@ -29,7 +29,6 @@ public class AuthController {
 	public String home() {
 		return "index";
 	}
-
 	@GetMapping("/register")
 	public String showRegisterationForm(Model model) {
 		
@@ -65,6 +64,7 @@ public class AuthController {
 		model.addAttribute("users", users);
 		return "users";
 	}
+
 
 	@GetMapping("/login")
 	public String basicSignin() {
