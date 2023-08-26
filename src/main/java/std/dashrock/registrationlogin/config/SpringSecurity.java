@@ -30,13 +30,10 @@ public class SpringSecurity {
 						.requestMatchers("/dashboard").hasRole("ADMIN")
 				).formLogin(
 						form -> form
-<<<<<<< HEAD
 								.loginPage("/login")
 								.loginProcessingUrl("/login")
-=======
 								.loginPage("/auth-basic-signin")
 								.loginProcessingUrl("/auth-basic-signin")
->>>>>>> 53da75561645ca4cf5d1f57061b5ea15f13bacf9
 								.defaultSuccessUrl("/dashboard",true)
 							 	.permitAll()
 						).logout(
