@@ -1,8 +1,8 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /opt
 COPY . .
-COPY /etc/secrets/.env ./.env
-RUN -ls -a | grep .env
+COPY /etc/secrets/.env /etc/secrets/.env
+ENV SECRET_DB_URL_PATH=/etc/secrets/.env
 RUN chmod +x mvnw
 RUN mvn clean package -DskipTests
 
