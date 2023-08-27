@@ -24,15 +24,15 @@ public class User {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false)
+	@Column(name="full_name", nullable = false)
 	private String fullName;
 	
-	@Column(nullable = false, unique = true)
+	@Column(name="email", nullable = false, unique = true)
 	private String email;
 	
-	@Column(nullable = false)
+	@Column(name="password", nullable = false)
 	private String password;
-
+	@Column(name="country")
 	private String country;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
@@ -57,9 +57,9 @@ public class User {
 		
 	}
 
-	public User(Long id, String fullName, String email, String password, String country, List<Role> roles) {
+	public User(Long id, String full_name, String email, String password, String country, List<Role> roles) {
 		this.id = id;
-		this.fullName = fullName;
+		this.fullName = full_name;
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
@@ -78,8 +78,8 @@ public class User {
 		return fullName;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFullName(String full_name) {
+		this.fullName = full_name;
 	}
 
 	public String getEmail() {

@@ -3,6 +3,7 @@ package std.dashrock.registrationlogin.entity;
 import java.util.Date;
 import java.util.UUID;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,9 +30,17 @@ public class ConfirmationToken {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
 
-    @OneToOne(targetEntity = User.class,fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name="user_id")
     private User user;
+
+    
+
+    /**
+     * 
+     */
+    public ConfirmationToken() {
+    }
 
     public ConfirmationToken(User user){
         this.user = user;
