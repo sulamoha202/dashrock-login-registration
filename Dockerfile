@@ -1,6 +1,8 @@
 FROM maven:3.8.5-openjdk-17 AS build
 WORKDIR /opt
 COPY . .
+Copy /etc/secrets/.env ./.env
+RUN -ls -a | grep .env
 RUN chmod +x mvnw
 RUN mvn clean package -DskipTests
 
