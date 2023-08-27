@@ -6,6 +6,6 @@ RUN chmod +x mvnw
 RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
-COPY --from=build target/demo-0.0.1-SNAPSHOT.jar demo.jar
+COPY --from=build target/registration-login-0.0.1-SNAPSHOT.jar dashrock.jar
 EXPOSE 80
-ENTRYPOINT ["java","-jar","demo.jar"]
+ENTRYPOINT ["java","-jar","dashrock.jar"]
