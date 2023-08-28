@@ -19,11 +19,11 @@ public class UserDto {
 		
 	}
 
-	public UserDto(Long id, @NotEmpty String fullName,
+	public UserDto(Long id, @NotEmpty String full_name,
 			@NotEmpty(message = "Email should not be empty") @Email String email,
 			@NotEmpty(message = "Password should not be empty") String password,String country) {
 		this.id = id;
-		this.fullName = fullName;
+		this.fullName = full_name;
 		this.email = email;
 		this.password = password;
 		this.country = country;
@@ -41,8 +41,8 @@ public class UserDto {
 		return fullName;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setFullName(String full_name) {
+		this.fullName = full_name;
 	}
 
 	public String getEmail() {

@@ -1,5 +1,8 @@
 package std.dashrock.registrationlogin.controller;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Controller;
@@ -13,7 +16,6 @@ import std.dashrock.registrationlogin.dto.UserDto;
 import std.dashrock.registrationlogin.entity.ConfirmationToken;
 import std.dashrock.registrationlogin.entity.User;
 import std.dashrock.registrationlogin.repository.ConfirmationTokenRepository;
-import std.dashrock.registrationlogin.repository.UserRepository;
 import std.dashrock.registrationlogin.service.EmailSendService;
 import std.dashrock.registrationlogin.service.UserService;
 
@@ -45,16 +47,25 @@ public class EmailConfirmController {
             modelAndView.setViewName("error");
         }else{
             userService.saveUser(userDto);
+            User savedUser = userService.findByEmailIgnoreCase(user.getEmail());
+            System.out.println("Email saved user: "+savedUser.getEmail());
 
-            ConfirmationToken confirmationToken = new ConfirmationToken(user);
+            ConfirmationToken confirmationToken = new ConfirmationToken(savedUser);
             confirmationTokenRepository.save(confirmationToken);
+            String serverDomain ="";
+            try{
+                serverDomain  = InetAddress.getLocalHost().getCanonicalHostName();
+            }catch(UnknownHostException e){
+                e.printStackTrace();
+            }
+
+            String confirmationLink= "http://"+serverDomain+"/api/confirm-account?token="+ confirmationToken.getConfirmationToken();
 
             SimpleMailMessage mailMessage =  new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
             mailMessage.setSubject("Complete Registration!");
             mailMessage.setFrom("dashrockstaff@gmail.com");
-            mailMessage.setText("To confirm your account, please click here : "+
-            "http://localhost:8080/confirm-account?tocken="+ confirmationToken.getConfirmationToken());
+            mailMessage.setText("To confirm your account, please click here : "+confirmationLink);
             emailSendService.sendEmail(mailMessage);
             modelAndView.addObject("email:" , user.getEmail());
             modelAndView.setViewName("successfulRegistration");
@@ -70,6 +81,7 @@ public class EmailConfirmController {
         if(token !=null){
             User user = userService.findByEmailIgnoreCase(token.getUser().getEmail());
             user.setEnabled(true);
+            user.setVerficationCode(confirmationToken);
             userService.saveUser(user);
             modelAndView.setViewName("accountVerified");
         }else{
