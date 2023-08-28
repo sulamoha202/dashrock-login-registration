@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import std.dashrock.registrationlogin.dto.UserDto;
 import std.dashrock.registrationlogin.entity.ConfirmationToken;
 import std.dashrock.registrationlogin.entity.User;
@@ -24,6 +25,9 @@ public class EmailConfirmController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private ConfirmationTokenRepository confirmationTokenRepository;
@@ -48,18 +52,13 @@ public class EmailConfirmController {
         }else{
             userService.saveUser(userDto);
             User savedUser = userService.findByEmailIgnoreCase(user.getEmail());
-            System.out.println("Email saved user: "+savedUser.getEmail());
+            
 
             ConfirmationToken confirmationToken = new ConfirmationToken(savedUser);
             confirmationTokenRepository.save(confirmationToken);
-            String serverDomain ="";
-            try{
-                serverDomain  = InetAddress.getLocalHost().getCanonicalHostName();
-            }catch(UnknownHostException e){
-                e.printStackTrace();
-            }
 
-            String confirmationLink= "http://"+serverDomain+"/api/confirm-account?token="+ confirmationToken.getConfirmationToken();
+            String domainName = request.getServerName();
+            String confirmationLink= "http://"+domainName+"/api/confirm-account?token="+ confirmationToken.getConfirmationToken();
 
             SimpleMailMessage mailMessage =  new SimpleMailMessage();
             mailMessage.setTo(user.getEmail());
@@ -67,7 +66,8 @@ public class EmailConfirmController {
             mailMessage.setFrom("dashrockstaff@gmail.com");
             mailMessage.setText("To confirm your account, please click here : "+confirmationLink);
             emailSendService.sendEmail(mailMessage);
-            modelAndView.addObject("email:" , user.getEmail());
+
+            modelAndView.addObject("email" , user.getEmail());
             modelAndView.setViewName("successfulRegistration");
 
         }
